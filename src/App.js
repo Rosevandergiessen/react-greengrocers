@@ -26,10 +26,21 @@ export default function App() {
   const [cart, setCart] = useState([])
   const [cartItemAmount, setCartItemAmount] = useState([])
 
-  const addToCart = (item) => {
-    setCart([...cart, item])
-  }
 
+
+  const addToCart = (productToAdd) => {
+    const isItemInCart = cart.find((item) => item.item.id === productToAdd.item.id)
+    if (isItemInCart) {
+      setCart(cart.map((item) => {
+        if (item.item.id === productToAdd.item.id) {
+          return {...item, amount: item.amount + 1}
+        }
+        return item
+      } ))
+    } else {
+      setCart([...cart, {...productToAdd, amount: 1}])
+    }
+  }
 
 
   return (
