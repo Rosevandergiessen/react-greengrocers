@@ -5,6 +5,7 @@ import initialStoreItems from './store-items'
 import { useState } from 'react'
 
 import { Product } from './component/Product'
+import { CartItem } from './component/CartItem'
 
 /*
 Here's what a store item should look like
@@ -23,6 +24,13 @@ export default function App() {
   // Setup state here...
   const [items, setItems] = useState(initialStoreItems)
   const [cart, setCart] = useState([])
+  const [cartItemAmount, setCartItemAmount] = useState([])
+
+  const addToCart = (item) => {
+    setCart([...cart, item])
+  }
+
+
 
   return (
     <>
@@ -33,6 +41,7 @@ export default function App() {
           <Product
             item = {item}
             key = {index}
+            addToCart = {addToCart}
           />)}
         </ul>
       </header>
@@ -40,7 +49,12 @@ export default function App() {
         <h2>Your Cart</h2>
         <div className="cart--item-list-container">
           <ul className="item-list cart--item-list">
-            {/* Write some code here... */}
+            {cart.map((item, index) =>
+            <CartItem
+              item = {item}
+              key = {index}
+            />
+            )}
           </ul>
         </div>
         <div className="total-section">
